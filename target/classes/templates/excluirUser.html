@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<html xmlns:th="http//www.thymeleaf.org"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar - Suplemax</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" th:href="@{/css/estilo.css}" type="text/css" media="all">
+</head>
+<body>
+    <div class="menu">
+        <a href="index.html">HOME</a>
+        <a href="cadastrar.html">CADASTRAR</a>
+        <a href="consultar.php">CONSULTAR</a>
+        <a href="pesquisar.html">PESQUISAR</a>
+        <a href="atualizar.html">ATUALIZAR</a>
+        <a href="excluir.html">EXCLUIR</a>
+    </div>
+
+    <div class="container mt-5">
+        <h2>Excluir</h2><br>
+        <form action="excluir.php" method="post">
+            <div class="form-group">
+                <label for="nome">ID do Produto:</label>
+                <input type="text" class="form-control" id="id" name="id" required>
+            </div>
+            <h2>Tem certeza que deseja excluir este produto?</h2>
+            <a href="index.html" class="btn btn-success mr-2">Página Inicial</a>
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        </form>
+    </div>
+
+</body>
+</html>

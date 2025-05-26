@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http//www.thymeleaf.org"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Usuários</title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/estilo.css}" type="text/css" media="all">
+</head>
+<body>
+    <div class="menu">
+        <a th:href="@{/user/inicio}">HOME</a>
+        <a th:href="@{/user/cadastrar}">CADASTRAR</a>
+        <a th:href="@{/user/pesquisarUser}">PESQUISAR</a>
+        <a th:href="@{/user/atualizarUser}">ATUALIZAR</a>
+        <a th:href="@{/user/excluirUser}">XCLUIR</a>
+    </div>
+    <div class="welcome-section">
+        <h1>Bem-vindo</h1>
+        <p>Sistema de gerenciamento de usuários</p>
+    </div>
+</body>
+</html>

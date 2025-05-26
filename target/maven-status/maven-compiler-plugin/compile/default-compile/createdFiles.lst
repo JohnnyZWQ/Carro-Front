@@ -1,0 +1,6 @@
+com\projetospring\projetoSpring\curso\CursoController.class
+com\projetospring\projetoSpring\user\UserModel.class
+com\projetospring\projetoSpring\user\IUserRepository.class
+com\projetospring\projetoSpring\ProjetoSpringApplication.class
+com\projetospring\projetoSpring\curso\CursoModel.class
+com\projetospring\projetoSpring\curso\ICursoRepository.class
