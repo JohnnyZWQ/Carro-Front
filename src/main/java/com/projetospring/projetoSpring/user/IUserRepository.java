@@ -12,5 +12,8 @@ public interface IUserRepository extends JpaRepository<UserModel, UUID> {
      * @return Um objeto UserModel correspondente ao nome informado.
      */
     UserModel findByname(String name);
+    Optional<UserModel> findByName(String name);
+
+
 }
 

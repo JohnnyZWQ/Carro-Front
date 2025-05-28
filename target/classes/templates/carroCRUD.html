@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Usuários</title>
+    <title>Controle de Carros</title>
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -14,11 +14,14 @@
 <body>
     <div class="menu">
         <a th:href="@{/user/inicio}">HOME</a>
-        <a th:href="@{/user/usuarioCRUD}">USUÁRIOS</a>
-        <a th:href="@{/carro/carroCRUD}">CARROS</a>
+        <a th:href="@{/carro/cadastrar}">CADASTRAR</a>
+        <a th:href="@{/carro/pesquisarCarro}">PESQUISAR</a>
+        <a th:href="@{/carro/atualizarCarro}">ATUALIZAR</a>
+        <a th:href="@{/carro/excluirCarro}">EXCLUIR</a>
     </div>
     <div class="welcome-section">
         <h1>Bem-vindo</h1>
+        <p>Sistema de gerenciamento de Carros</p>
     </div>
 </body>
 </html>

@@ -24,25 +24,26 @@
     <div class="container">
     <h2>Pesquisar Usuário</h2>
 
-   <!-- Formulário para buscar por ID -->
-            <form th:action="@{/user/pesquisarID}" method="get">
-                <div class="form-group">
-                    <label for="id">ID do Usuário:</label>
-                    <input type="text" class="form-control" id="id" name="id" placeholder="Digite o ID do usuário" required />
-                </div>
-                <button type="submit" class="btn btn-primary">Buscar</button>
-            </form>
-
-            <!-- Mensagem de erro -->
-            <div th:if="${erro}" class="alert alert-danger mt-3" th:text="${erro}"></div>
-
-            <!-- Exibir os dados do usuário, se encontrado -->
-            <div th:if="${UserModel.id}" class="mt-4">
-                <h4>Dados do Usuário</h4>
-                <p><strong>Nome:</strong> <span th:text="${UserModel.name}"></span></p>
-                <p><strong>Email:</strong> <span th:text="${UserModel.email}"></span></p>
-            </div>
+    <!-- Formulário para buscar por nome -->
+    <form th:action="@{/user/pesquisarNome}" method="get">
+        <div class="form-group">
+            <label for="name">Nome do Usuário:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do usuário" required />
         </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <!-- Mensagem de erro -->
+    <div th:if="${erro}" class="alert alert-danger mt-3" th:text="${erro}"></div>
+
+    <!-- Exibir os dados do usuário, se encontrado -->
+    <div th:if="${UserModel.id}" class="mt-4">
+        <h4>Dados do Usuário</h4>
+        <p><strong>ID:</strong> <span th:text="${UserModel.id}"></span></p>
+        <p><strong>Nome:</strong> <span th:text="${UserModel.name}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${UserModel.email}"></span></p>
+    </div>
+    </div>
     </div>
 </body>
 </html>

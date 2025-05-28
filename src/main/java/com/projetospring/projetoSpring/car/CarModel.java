@@ -2,9 +2,15 @@ package com.projetospring.projetoSpring.car; // Define o pacote onde esta classe
 import jakarta.persistence.Entity; // Importa a anotação para marcar a classe como uma entidade do JPA.
 import jakarta.persistence.GeneratedValue; // Importa a anotação para gerar valores automaticamente.
 import jakarta.persistence.Id; // Importa a anotação que define o atributo como chave primária.
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID; // Importa a classe UUID para identificadores únicos.
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "tb_carros")
 public class CarModel {
 
