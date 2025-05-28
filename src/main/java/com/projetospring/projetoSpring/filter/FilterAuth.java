@@ -30,8 +30,8 @@ public class FilterAuth extends OncePerRequestFilter {
 
         var servletPath = request.getServletPath();
 
-        // Aplica a autenticação somente no endpoint /carro/novo
-        if (servletPath.equals("/carro/novo")) {
+        // Aplica a autenticação somente no endpoint /user/novo
+        if (servletPath.equals("/user/novo")) {
             var authorization = request.getHeader("Authorization");
 
             // Verifica se o cabeçalho Authorization está presente e correto

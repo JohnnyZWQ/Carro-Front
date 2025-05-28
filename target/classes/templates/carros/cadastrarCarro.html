@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<html xmlns:th="http//www.thymeleaf.org"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Carro</title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/estilo.css}" type="text/css" media="all">
+</head>
+
+<body>
+    <div class="menu">
+        <a th:href="@{/user/inicio}">HOME</a>
+        <a th:href="@{/carro/cadastrarCarro}">CADASTRAR</a>
+        <a th:href="@{/carro/pesquisarCarro}">PESQUISAR</a>
+        <a th:href="@{/carro/atualizarCarro}">ATUALIZAR</a>
+        <a th:href="@{/carro/excluirCarro}">EXCLUIR</a>
+    </div>
+
+    <div class="container-cadastro">
+    <div class="container">
+    <h2>Cadastro de Carro</h2>
+
+    <form th:action="@{/carro/salvar}"  th:object="${CarModel}" method="post">
+        
+        <div class="form-group">
+            <label for="nome">Nome do Carro:</label>
+            <input type="text" id="nome" th:field="*{nome}" placeholder="Digite o nome do seu Carro" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="ano">Ano:</label>
+            <input type="text" id="ano" th:field="*{ano}" placeholder="Digite o ano" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" th:field="*{modelo}" placeholder="Digite seu modelo" required>
+        </div>
+
+        <div class="form-group">
+            <label for="potencia">Potência:</label>
+            <input type="text" id="potencia" th:field="*{potencia}" placeholder="Insira a potência" required>
+        </div>
+            <button type="submit" class="button">Cadastrar</button>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>
+

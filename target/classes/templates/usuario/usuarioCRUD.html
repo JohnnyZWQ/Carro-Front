@@ -19,9 +19,23 @@
         <a th:href="@{/user/atualizarUser}">ATUALIZAR</a>
         <a th:href="@{/user/excluirUser}">EXCLUIR</a>
     </div>
-    <div class="welcome-section">
-        <h1>Bem-vindo</h1>
-        <p>Sistema de gerenciamento de usuários</p>
-    </div>
+    <div class="containerLista">
+    <h1>Lista de Usuários</h1>
+    <a class="btn" href="/user/cadastrar">Cadastrar Novo Usuário</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

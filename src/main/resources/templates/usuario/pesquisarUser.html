@@ -37,7 +37,7 @@
     <div th:if="${erro}" class="alert alert-danger mt-3" th:text="${erro}"></div>
 
     <!-- Exibir os dados do usuário, se encontrado -->
-    <div th:if="${UserModel.id}" class="mt-4">
+    <div th:if="${UserModel != null}" class="mt-4">
         <h4>Dados do Usuário</h4>
         <p><strong>ID:</strong> <span th:text="${UserModel.id}"></span></p>
         <p><strong>Nome:</strong> <span th:text="${UserModel.name}"></span></p>

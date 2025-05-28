@@ -12,16 +12,36 @@
     <link rel="stylesheet" th:href="@{/css/estilo.css}" type="text/css" media="all">
 </head>
 <body>
+
     <div class="menu">
         <a th:href="@{/user/inicio}">HOME</a>
-        <a th:href="@{/carro/cadastrar}">CADASTRAR</a>
+        <a th:href="@{/carro/cadastrarCarro}">CADASTRAR</a>
         <a th:href="@{/carro/pesquisarCarro}">PESQUISAR</a>
         <a th:href="@{/carro/atualizarCarro}">ATUALIZAR</a>
         <a th:href="@{/carro/excluirCarro}">EXCLUIR</a>
     </div>
-    <div class="welcome-section">
-        <h1>Bem-vindo</h1>
-        <p>Sistema de gerenciamento de Carros</p>
-    </div>
+    
+    <div class="containerLista">
+    <h1>Lista de Carros</h1>
+    <a class="btn" href="/carro/cadastrarCarro">Cadastrar Novo Carro</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Ano</th>
+            <th>Modelo</th>
+            <th>Potência</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="carro : ${cars}">
+            <td th:text="${carro.nome}"></td>
+            <td th:text="${carro.ano}"></td>
+            <td th:text="${carro.modelo}"></td>
+            <td th:text="${carro.potencia}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

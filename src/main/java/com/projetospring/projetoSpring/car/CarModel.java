@@ -1,4 +1,5 @@
 package com.projetospring.projetoSpring.car; // Define o pacote onde esta classe está localizada.
+
 import jakarta.persistence.Entity; // Importa a anotação para marcar a classe como uma entidade do JPA.
 import jakarta.persistence.GeneratedValue; // Importa a anotação para gerar valores automaticamente.
 import jakarta.persistence.Id; // Importa a anotação que define o atributo como chave primária.
@@ -17,20 +18,18 @@ public class CarModel {
     @Id // Define o campo como chave primária da tabela.
     @GeneratedValue(generator = "UUID") // Gera um UUID automaticamente para o campo.
     private UUID idCarro;
-
+    
     private String nome;
-    private String senha;  
+    private String ano;
+    private String modelo;
+    private String potencia;
 
-    private UUID id;
-
-    // Métodos getters e setters:
-
-    public String getSenha() {
-        return senha;
+    public UUID getIdCarro() {
+        return idCarro;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setIdCarro(UUID idCarro) {
+        this.idCarro = idCarro;
     }
 
     public String getNome() {
@@ -41,19 +40,27 @@ public class CarModel {
         this.nome = nome;
     }
 
-    public UUID getId() {
-        return id;
+    public String getAno() {
+        return ano;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setAno(String ano) {
+        this.ano = ano;
     }
 
-    public UUID getIdCarro() {
-        return idCarro;
+    public String getModelo() {
+        return modelo;
     }
 
-    public void setIdCarro(UUID idCarro) {
-        this.idCarro = idCarro;
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getPotencia() {
+        return potencia;
+    }
+
+    public void setPotencia(String potencia) {
+        this.potencia = potencia;
     }
 }

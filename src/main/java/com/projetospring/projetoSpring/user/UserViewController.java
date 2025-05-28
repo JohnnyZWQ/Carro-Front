@@ -20,22 +20,24 @@ public class UserViewController {
      // Página inicial da aplicação (pode ser dashboard ou home)
     @GetMapping("/inicio")
     public ModelAndView PaginaInicial(){
-    ModelAndView mv= new ModelAndView("index");
+    ModelAndView mv= new ModelAndView("usuario/index");
     mv.addObject("UserModel", new UserModel());
     return mv;
 }
 
     @GetMapping("/usuarioCRUD")
     public ModelAndView userCrud(){
-    ModelAndView mv= new ModelAndView("usuarioCRUD");
+    ModelAndView mv= new ModelAndView("usuario/usuarioCRUD");
     mv.addObject("UserModel", new UserModel());
+    mv.addObject("users", iuserRepository.findAll()); // <-- Envia lista de usuários
+
     return mv;
 }
 
     // Exibe formulário para cadastro de usuário
     @GetMapping("/cadastrar")
     public ModelAndView cadastroForm() {
-        ModelAndView mv = new ModelAndView("cadastrarUser");
+        ModelAndView mv = new ModelAndView("usuario/cadastrarUser");
         mv.addObject("UserModel", new UserModel());
         return mv;
     }
@@ -46,20 +48,30 @@ public class UserViewController {
         var hashSenha = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
         userModel.setPassword(hashSenha);
         iuserRepository.save(userModel);
-        return "redirect:/user/cadastrarUser"; 
+        return "redirect:/user/usuarioCRUD"; 
     }
 
 
     @GetMapping("/atualizarUser")
     public ModelAndView exibirFormularioAtualizacao() {
-    ModelAndView mv = new ModelAndView("atualizarUser");
+    ModelAndView mv = new ModelAndView("usuario/atualizarUser");
     mv.addObject("UserModel", new UserModel());
     return mv;
 }
 
     // Busca usuário por ID e preenche o formulário
     @GetMapping("/buscarPorId")
-    public String buscarPorId(@RequestParam("id") UUID id, Model model) {
+    public String buscarPorId(@RequestParam("id") String idStr, Model model) {
+    UUID id = null;
+    try {
+        id = UUID.fromString(idStr);
+    } catch (IllegalArgumentException e) {
+        // Valor não é UUID válido, considerar como "não encontrado"
+        model.addAttribute("erro", "Usuário não encontrado para o ID informado.");
+        model.addAttribute("UserModel", new UserModel());
+        return "usuario/atualizarUser";
+    }
+
     Optional<UserModel> usuarioOpt = iuserRepository.findById(id);
     if (usuarioOpt.isPresent()) {
         model.addAttribute("UserModel", usuarioOpt.get());
@@ -67,8 +79,9 @@ public class UserViewController {
         model.addAttribute("UserModel", new UserModel());
         model.addAttribute("erro", "Usuário não encontrado para o ID informado.");
     }
-    return "atualizarUser";
+    return "usuario/atualizarUser";
 }
+
 
     // Atualiza os dados e criptografa a senha
     @PostMapping("/atualizarUser")
@@ -78,14 +91,14 @@ public class UserViewController {
         userModel.setPassword(hashSenha);
     }
     iuserRepository.save(userModel);
-    return "redirect:/user/cadastrarUser";
+    return "redirect:/user/usuarioCRUD";
 }
 
 
 
     @GetMapping("/excluirUser")
     public ModelAndView Exluir(){
-        ModelAndView mv= new ModelAndView("excluirUser");
+        ModelAndView mv= new ModelAndView("usuario/excluirUser");
         mv.addObject("UserModel", new UserModel());
         return mv;
     }
@@ -93,25 +106,25 @@ public class UserViewController {
     @PostMapping("/excluir")
     public String excluirUsuario(@RequestParam("id") UUID id) {
     iuserRepository.deleteById(id);
-    return "redirect:/user/cadastrarUser";
+    return "redirect:/user/usuarioCRUD";
 }
 
     @GetMapping("/pesquisarUser")
     public ModelAndView Pesquisar(){
-        ModelAndView mv= new ModelAndView( "pesquisarUser");
+        ModelAndView mv= new ModelAndView( "usuario/pesquisarUser");
         mv.addObject("UserModel", new UserModel());
         return mv;
     }
 
     @GetMapping("/pesquisarNome")
-public String pesquisarNome(@RequestParam("name") String name, Model model) {
+    public String pesquisarNome(@RequestParam("name") String name, Model model) {
     Optional<UserModel> usuarioOpt = iuserRepository.findByName(name);
     if (usuarioOpt.isPresent()) {
         model.addAttribute("UserModel", usuarioOpt.get());
     } else {
         model.addAttribute("erro", "Usuário não encontrado com esse nome.");
     }
-    return "pesquisarUser";
+    return "usuario/pesquisarUser";
 }
 
 

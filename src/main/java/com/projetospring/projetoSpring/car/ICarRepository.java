@@ -1,6 +1,8 @@
 package com.projetospring.projetoSpring.car;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 import java.util.UUID;
 
 /*
@@ -14,4 +16,5 @@ public interface ICarRepository extends JpaRepository<CarModel, UUID> {
      * Spring Data JPA entende o nome "findByNome" e cria a consulta automaticamente.
      */
     CarModel findByNome(String nome);
+    Optional<CarModel> findBynome(String nome);
 }

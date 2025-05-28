@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<html xmlns:th="http//www.thymeleaf.org"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar Carro</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/estilo.css}" type="text/css" media="all">
+</head>
+<body>
+    <div class="menu">
+        <a th:href="@{/user/inicio}">HOME</a>
+        <a th:href="@{/carro/cadastrarCarro}">CADASTRAR</a>
+        <a th:href="@{/carro/pesquisarCarro}">PESQUISAR</a>
+        <a th:href="@{/carro/atualizarCarro}">ATUALIZAR</a>
+        <a th:href="@{/carro/excluirCarro}">EXCLUIR</a>
+    </div>
+
+    <div class="container-cadastro">
+    <div class="container">
+    <h2>Pesquisar Carro</h2>
+
+    <!-- Formulário para buscar por nome -->
+    <form th:action="@{/carro/pesquisarNome}" method="get">
+        <div class="form-group">
+            <label for="nome">Nome do Carro:</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome do carro" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    <!-- Mensagem de erro -->
+    <div th:if="${erro}" class="alert alert-danger mt-3" th:text="${erro}"></div>
+
+    <!-- Exibir os dados do usuário, se encontrado -->
+    <div th:if="${CarModel != null}" class="mt-4">
+        <h4>Dados do Carro</h4>
+        <p><strong>ID:</strong> <span th:text="${CarModel.idCarro}"></span></p>
+        <p><strong>Nome:</strong> <span th:text="${CarModel.nome}"></span></p>
+        <p><strong>Ano:</strong> <span th:text="${CarModel.ano}"></span></p>
+        <p><strong>Modelo:</strong> <span th:text="${CarModel.modelo}"></span></p>
+        <p><strong>Potência:</strong> <span th:text="${CarModel.potencia}"></span></p>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
