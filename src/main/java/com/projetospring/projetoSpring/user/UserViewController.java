@@ -17,24 +17,24 @@ public class UserViewController {
     @Autowired
     private IUserRepository iuserRepository;
 
-     // Página inicial da aplicação (pode ser dashboard ou home)
+    // Página inicial do sistema (pode servir como dashboard ou home)
     @GetMapping("/inicio")
-    public ModelAndView PaginaInicial(){
-    ModelAndView mv= new ModelAndView("usuario/index");
-    mv.addObject("UserModel", new UserModel());
-    return mv;
-}
+    public ModelAndView PaginaInicial() {
+        ModelAndView mv = new ModelAndView("usuario/index");
+        mv.addObject("UserModel", new UserModel());
+        return mv;
+    }
 
+    // Página que lista todos os usuários cadastrados (CRUD principal)
     @GetMapping("/usuarioCRUD")
-    public ModelAndView userCrud(){
-    ModelAndView mv= new ModelAndView("usuario/usuarioCRUD");
-    mv.addObject("UserModel", new UserModel());
-    mv.addObject("users", iuserRepository.findAll()); // <-- Envia lista de usuários
+    public ModelAndView userCrud() {
+        ModelAndView mv = new ModelAndView("usuario/usuarioCRUD");
+        mv.addObject("UserModel", new UserModel());
+        mv.addObject("users", iuserRepository.findAll()); // Lista de usuários enviados para exibição
+        return mv;
+    }
 
-    return mv;
-}
-
-    // Exibe formulário para cadastro de usuário
+    // Exibe o formulário de cadastro de novo usuário
     @GetMapping("/cadastrar")
     public ModelAndView cadastroForm() {
         ModelAndView mv = new ModelAndView("usuario/cadastrarUser");
@@ -42,92 +42,90 @@ public class UserViewController {
         return mv;
     }
 
-    // Processa cadastro do usuário
+    // Processa o cadastro do usuário (com senha criptografada)
     @PostMapping("/salvar")
     public String cadastro(UserModel userModel) {
         var hashSenha = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
         userModel.setPassword(hashSenha);
         iuserRepository.save(userModel);
-        return "redirect:/user/usuarioCRUD"; 
+        return "redirect:/user/usuarioCRUD";
     }
 
-
+    // Exibe formulário de atualização do usuário (por ID)
     @GetMapping("/atualizarUser")
     public ModelAndView exibirFormularioAtualizacao() {
-    ModelAndView mv = new ModelAndView("usuario/atualizarUser");
-    mv.addObject("UserModel", new UserModel());
-    return mv;
-}
+        ModelAndView mv = new ModelAndView("usuario/atualizarUser");
+        mv.addObject("UserModel", new UserModel());
+        return mv;
+    }
 
-    // Busca usuário por ID e preenche o formulário
+    // Busca usuário por ID e preenche o formulário de atualização
     @GetMapping("/buscarPorId")
     public String buscarPorId(@RequestParam("id") String idStr, Model model) {
-    UUID id = null;
-    try {
-        id = UUID.fromString(idStr);
-    } catch (IllegalArgumentException e) {
-        // Valor não é UUID válido, considerar como "não encontrado"
-        model.addAttribute("erro", "Usuário não encontrado para o ID informado.");
-        model.addAttribute("UserModel", new UserModel());
+        UUID id = null;
+        try {
+            id = UUID.fromString(idStr);
+        } catch (IllegalArgumentException e) {
+            // ID inválido, retorna erro
+            model.addAttribute("erro", "Usuário não encontrado para o ID informado.");
+            model.addAttribute("UserModel", new UserModel());
+            return "usuario/atualizarUser";
+        }
+
+        Optional<UserModel> usuarioOpt = iuserRepository.findById(id);
+        if (usuarioOpt.isPresent()) {
+            model.addAttribute("UserModel", usuarioOpt.get());
+        } else {
+            model.addAttribute("UserModel", new UserModel());
+            model.addAttribute("erro", "Usuário não encontrado para o ID informado.");
+        }
         return "usuario/atualizarUser";
     }
 
-    Optional<UserModel> usuarioOpt = iuserRepository.findById(id);
-    if (usuarioOpt.isPresent()) {
-        model.addAttribute("UserModel", usuarioOpt.get());
-    } else {
-        model.addAttribute("UserModel", new UserModel());
-        model.addAttribute("erro", "Usuário não encontrado para o ID informado.");
-    }
-    return "usuario/atualizarUser";
-}
-
-
-    // Atualiza os dados e criptografa a senha
+    // Atualiza dados do usuário com nova senha criptografada (se informada)
     @PostMapping("/atualizarUser")
     public String atualizarUsuario(@ModelAttribute("UserModel") UserModel userModel) {
-    if (userModel.getPassword() != null && !userModel.getPassword().isBlank()) {
-        String hashSenha = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
-        userModel.setPassword(hashSenha);
+        if (userModel.getPassword() != null && !userModel.getPassword().isBlank()) {
+            String hashSenha = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
+            userModel.setPassword(hashSenha);
+        }
+        iuserRepository.save(userModel);
+        return "redirect:/user/usuarioCRUD";
     }
-    iuserRepository.save(userModel);
-    return "redirect:/user/usuarioCRUD";
-}
 
-
-
+    // Exibe formulário para exclusão de usuário
     @GetMapping("/excluirUser")
-    public ModelAndView Exluir(){
-        ModelAndView mv= new ModelAndView("usuario/excluirUser");
+    public ModelAndView Exluir() {
+        ModelAndView mv = new ModelAndView("usuario/excluirUser");
         mv.addObject("UserModel", new UserModel());
         return mv;
     }
-   
+
+    // Exclui o usuário pelo ID
     @PostMapping("/excluir")
     public String excluirUsuario(@RequestParam("id") UUID id) {
-    iuserRepository.deleteById(id);
-    return "redirect:/user/usuarioCRUD";
-}
+        iuserRepository.deleteById(id);
+        return "redirect:/user/usuarioCRUD";
+    }
 
+    // Exibe formulário de pesquisa por nome
     @GetMapping("/pesquisarUser")
-    public ModelAndView Pesquisar(){
-        ModelAndView mv= new ModelAndView( "usuario/pesquisarUser");
+    public ModelAndView Pesquisar() {
+        ModelAndView mv = new ModelAndView("usuario/pesquisarUser");
         mv.addObject("UserModel", new UserModel());
         return mv;
     }
 
+    // Pesquisa usuário pelo nome informado e exibe resultado
     @GetMapping("/pesquisarNome")
     public String pesquisarNome(@RequestParam("name") String name, Model model) {
-    Optional<UserModel> usuarioOpt = iuserRepository.findByName(name);
-    if (usuarioOpt.isPresent()) {
-        model.addAttribute("UserModel", usuarioOpt.get());
-    } else {
-        model.addAttribute("erro", "Usuário não encontrado com esse nome.");
+        Optional<UserModel> usuarioOpt = iuserRepository.findByName(name);
+        if (usuarioOpt.isPresent()) {
+            model.addAttribute("UserModel", usuarioOpt.get());
+        } else {
+            model.addAttribute("erro", "Usuário não encontrado com esse nome.");
+        }
+        return "usuario/pesquisarUser";
     }
-    return "usuario/pesquisarUser";
 }
 
-
-
-
-}

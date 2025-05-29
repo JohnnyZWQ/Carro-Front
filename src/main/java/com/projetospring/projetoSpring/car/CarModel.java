@@ -1,13 +1,13 @@
-package com.projetospring.projetoSpring.car; // Define o pacote onde esta classe está localizada.
+package com.projetospring.projetoSpring.car;
 
-import jakarta.persistence.Entity; // Importa a anotação para marcar a classe como uma entidade do JPA.
-import jakarta.persistence.GeneratedValue; // Importa a anotação para gerar valores automaticamente.
-import jakarta.persistence.Id; // Importa a anotação que define o atributo como chave primária.
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID; // Importa a classe UUID para identificadores únicos.
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
